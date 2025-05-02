@@ -97,49 +97,72 @@ body {
 .grab-mode .pixel { cursor: copy; }
 
 /* 6. Responsive tweaks for mobile */
+/*    Use a two-column grid for toolbar controls to avoid overlap */
 @media (max-width: 600px) {
   /* Stack toolbar above canvas */
   .app-container {
     flex-direction: column;
     align-items: stretch;
+    padding: 0.5rem;
     gap: 1rem;
+  }
+
+  /* Toolbar as full-width two-column grid */
+  .toolbar {
+    flex: none; /* disable sidebar width */
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    max-height: 80vh;
+    overflow-y: auto;
     padding: 1rem;
   }
 
-  /* Toolbar becomes full-width, horizontal scroll if overflow */
-  .toolbar {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.5rem;
-    padding: 1rem;
-    overflow-x: auto;
+  /* Headings span both columns */
+  .toolbar h1,
+  .toolbar p {
+    grid-column: 1 / -1;
+    text-align: center;
   }
+
+  /* Labels and grid-control span both columns */
   .toolbar label,
   .toolbar .grid-control {
-    flex: 1 1 45%;
-    min-width: 120px;
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
+
+  /* Buttons take one grid cell each */
   .toolbar button {
-    flex: 1 1 30%;
-    min-width: 80px;
-    font-size: 0.85rem;
+    width: 100%;
+    font-size: 0.9rem;
     padding: 0.5rem;
   }
 
-  /* Canvas takes full width below toolbar */
+  /* Utility buttons span full width */
+  #toggleGrid,
+  #clearBtn,
+  #undoBtn,
+  #saveBtn,
+  #exportBtn {
+    grid-column: 1 / -1;
+  }
+
+  /* Canvas full width below toolbar */
   #canvasContainer {
     width: 100%;
     padding: 0.5rem;
   }
 
-  /* Ensure pixels remain square and fit */
+  /* Ensure pixels remain perfect squares */
   .pixel {
     padding-bottom: 100%;
   }
 
-  /* Shrink grid-size label font */
+  /* Shrink the grid-size label font slightly */
   #gridLabel {
     font-size: 0.85rem;
   }
