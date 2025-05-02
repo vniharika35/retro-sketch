@@ -7,6 +7,7 @@
  3. Toolbar styles
  4. Grid & pixel styles
  5. Mode/active button highlights
+ 6. Responsive tweaks for mobile
 */
 
 /* 1. Reset & Base */
@@ -16,58 +17,131 @@ body {
   background: #111;
   color: #4af;
   font-family: 'Segoe UI', sans-serif;
-  display: flex; justify-content: center; align-items: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   padding: 2rem 0;
 }
 
 /* 2. App container: flex split */
 .app-container {
-  display: flex; gap: 2rem;
-  width: 90vw; max-width: 1400px; margin: 0 auto;
+  display: flex;
+  gap: 2rem;
+  width: 90vw;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 /* 3. Toolbar */
 .toolbar {
   flex: 0 0 260px;
-  background: #1f1f1f; padding: 1.5rem;
-  border-radius: 8px; box-shadow: 0 0 16px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column; gap: 0.75rem;
+  background: #1f1f1f;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 16px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 .toolbar h1 { font-size: 1.5rem; text-align: center; }
 .toolbar p  { text-align: center; font-size: 0.9rem; }
 .toolbar label {
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .toolbar .grid-control {
-  display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
 }
 .toolbar .grid-label-text { white-space: nowrap; }
 .toolbar button {
-  background: transparent; border: 1px solid #4af;
-  color: #4af; padding: 0.6rem; border-radius: 4px;
+  background: transparent;
+  border: 1px solid #4af;
+  color: #4af;
+  padding: 0.6rem;
+  border-radius: 4px;
   cursor: pointer;
 }
 .toolbar button:hover { background: rgba(74,175,255,0.1); }
 
 /* 5. Active tool highlight */
 .toolbar button.active {
-  background: rgba(74,175,255,0.2); border-color: #4af;
+  background: rgba(74,175,255,0.2);
+  border-color: #4af;
 }
 
 /* 4. Canvas grid */
 #canvasContainer {
-  flex: 1; background: #1f1f1f; padding: 1rem;
-  border-radius: 8px; box-shadow: 0 0 16px rgba(0,0,0,0.5);
-  display: grid; gap: 1px; /* 1px grid lines */
+  flex: 1;
+  background: #1f1f1f;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 16px rgba(0,0,0,0.5);
+  display: grid;
+  gap: 1px; /* 1px grid lines */
 }
 /* Remove grid lines */
 #canvasContainer.no-grid-lines { gap: 0; }
 
 /* Pixel cells: responsive squares */
 .pixel {
-  width: 100%; padding-bottom: 100%;
-  background: var(--bgColour, #fff); cursor: crosshair;
+  width: 100%;
+  padding-bottom: 100%;
+  background: var(--bgColour, #fff);
+  cursor: crosshair;
 }
 /* Grab mode cursor */
 .grab-mode .pixel { cursor: copy; }
+
+/* 6. Responsive tweaks for mobile */
+@media (max-width: 600px) {
+  /* Stack toolbar above canvas */
+  .app-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  /* Toolbar becomes full-width, horizontal scroll if overflow */
+  .toolbar {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  .toolbar label,
+  .toolbar .grid-control {
+    flex: 1 1 45%;
+    min-width: 120px;
+  }
+  .toolbar button {
+    flex: 1 1 30%;
+    min-width: 80px;
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  /* Canvas takes full width below toolbar */
+  #canvasContainer {
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  /* Ensure pixels remain square and fit */
+  .pixel {
+    padding-bottom: 100%;
+  }
+
+  /* Shrink grid-size label font */
+  #gridLabel {
+    font-size: 0.85rem;
+  }
+}
 
